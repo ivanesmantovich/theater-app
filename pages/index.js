@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Theater} from "./Theater.tsx";
+import Theater from "../components/Theater";
 
 export default function Home() {
   return (
