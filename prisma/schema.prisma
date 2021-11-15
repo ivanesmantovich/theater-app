@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,93 +8,113 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  uuid      String   @unique @default(uuid())
-  email     String   @unique
-  name      String
-  role      UserRole @default(USER)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  tickets   Ticket[]
+  id          Int      @id @default(autoincrement())
+  uuid        String   @unique @default(uuid())
+  email       String   @unique
+  name        String
+  role        UserRole @default(USER)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  profile_pic String?
+  gender      gen?
+  age         Int?
+  tickets     Ticket[]
+  wants       wants[]  @relation("usersTowants")
 
-  @@map(name: "users")
+  @@map("users")
 }
 
 model Ticket {
-  id          Int       @id @default(autoincrement())
-  uuid        String    @unique @default(uuid())
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int
-  screening   Screening @relation(fields: [screeningId], references: [id])
-  screeningId Int
-
-  @@map(name: "tickets")
+  id           Int            @id @default(autoincrement())
+  uuid         String         @unique @default(uuid())
+  userId       Int
+  screeningId  Int
+  screening    Screening      @relation(fields: [screeningId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
   ReservedSeat ReservedSeat[]
+
+  @@map("tickets")
 }
 
 model Movie {
-  id          Int    @id @default(autoincrement())
-  uuid        String @unique @default(uuid())
-  title       String @unique
+  id          Int         @id @default(autoincrement())
+  uuid        String      @unique @default(uuid())
+  title       String      @unique
   length      String
   director    String
   description String
+  Screening   Screening[]
 
-  @@map(name: "movies")
-  Screening Screening[]
+  @@map("movies")
 }
 
 model Screening {
-  id      Int    @id @default(autoincrement())
-  uuid    String @unique @default(uuid())
-  movie   Movie  @relation(fields: [movieId], references: [id])
-  movieId Int
-  room    Room   @relation(fields: [roomId], references: [id])
-  roomId  Int
-
-  @@map(name: "screenings")
-  Ticket       Ticket[]
+  id           Int            @id @default(autoincrement())
+  uuid         String         @unique @default(uuid())
+  movieId      Int
+  roomId       Int
+  time         String?
+  movie        Movie          @relation(fields: [movieId], references: [id])
+  room         Room           @relation(fields: [roomId], references: [id])
   ReservedSeat ReservedSeat[]
+  Ticket       Ticket[]
+  wants        wants[]        @relation("screeningsTowants")
+
+  @@map("screenings")
 }
 
 model Room {
-  id    Int    @id @default(autoincrement())
-  uuid  String @unique @default(uuid())
-  name  String
-  seats Int
-
-  @@map(name: "rooms")
+  id        Int         @id @default(autoincrement())
+  uuid      String      @unique @default(uuid())
+  name      String
+  seats     Int
   Screening Screening[]
   Seat      Seat[]
+
+  @@map("rooms")
 }
 
 model Seat {
-  id     Int    @id @default(autoincrement())
-  uuid   String @unique @default(uuid())
-  row    Int
-  number Int
-  room   Room   @relation(fields: [roomId], references: [id])
-  roomId Int
-
-  @@map(name: "seats")
+  id           Int            @id @default(autoincrement())
+  uuid         String         @unique @default(uuid())
+  row          Int
+  number       Int
+  roomId       Int
+  room         Room           @relation(fields: [roomId], references: [id])
   ReservedSeat ReservedSeat[]
+
+  @@map("seats")
 }
 
 model ReservedSeat {
   id          Int       @id @default(autoincrement())
   uuid        String    @unique @default(uuid())
-  seat        Seat      @relation(fields: [seatId], references: [id])
   seatId      Int
-  ticket      Ticket    @relation(fields: [ticketId], references: [id])
   ticketId    Int
-  screening   Screening @relation(fields: [screeningId], references: [id])
   screeningId Int
+  screening   Screening @relation(fields: [screeningId], references: [id])
+  seat        Seat      @relation(fields: [seatId], references: [id])
+  ticket      Ticket    @relation(fields: [ticketId], references: [id])
 
-  @@map(name: "reservedseats")
+  @@map("reservedseats")
+}
+
+model wants {
+  id           Int        @id(map: "wants_pk") @default(autoincrement())
+  user_id      Int?
+  screening_id Int?
+  screenings   Screening? @relation("screeningsTowants", fields: [screening_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users        User?      @relation("usersTowants", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 enum UserRole {
   USER
   ADMIN
   SUPERADMIN
+}
+
+enum gen {
+  m
+  f
+  o
 }
