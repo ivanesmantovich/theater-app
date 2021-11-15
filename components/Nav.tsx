@@ -1,25 +1,25 @@
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
 type NavType = {};
 
 export const Nav = ({}: NavType) => {
   return (
-    <div className={"md:col-span-1 md:flex md:justify-end"}>
-      <nav className={"text-right"}>
-        <div className={"flex justify-between items-center"}>
+    <div className={'md:col-span-1 md:flex md:justify-end'}>
+      <nav className={'text-right'}>
+        <div className={'flex justify-between items-center'}>
           <h1
             className={
-              "font-bold text-purple-700 hover:text-purple-900 uppercase p-4 border-b border-gray-100"
+              'font-bold text-purple-700 hover:text-purple-900 uppercase p-4 border-b border-gray-100'
             }
           >
-            <Link href={"/"}>
-              <span className={"text-xl"}>Theater App</span>
+            <Link href={'/'}>
+              <span className={'text-xl'}>MovieDate</span>
             </Link>
           </h1>
 
           {/*Добавить работоспособность menuToggle в реакте*/}
-          <div id={"menuToggle"} className={"md:hidden px-4 cursor-pointer"}>
+          <div id={'menuToggle'} className={'md:hidden px-4 cursor-pointer'}>
             <svg
               className="w-6 h-6"
               fill="none"
@@ -38,16 +38,16 @@ export const Nav = ({}: NavType) => {
         </div>
 
         <ul
-          id={"menu"}
-          className={"hidden md:block mt-6 text-xl text-gray-600"}
+          id={'menu'}
+          className={'hidden md:block mt-6 text-xl text-gray-600'}
         >
           <li
             className={
-              "font-bold py-1 border-r-4 border-purple-700 hover:text-gray-900"
+              'font-bold py-1 border-r-4 border-purple-700 hover:text-gray-900'
             }
           >
-            <Link href={"/"}>
-              <span className={"px-4 flex justify-end"}>
+            <Link href={'/'}>
+              <span className={'px-4 flex justify-end'}>
                 <span>Home</span>
                 <svg
                   className="w-6 h-6 ml-2"
@@ -69,11 +69,11 @@ export const Nav = ({}: NavType) => {
           {/*Добавлять border-r-4 border-purple-700 при выборе*/}
           <li
             className={
-              "font-bold py-1 hover:text-gray-900 border-r-4 border-white"
+              'font-bold py-1 hover:text-gray-900 border-r-4 border-white'
             }
           >
-            <Link href={"/profile"}>
-              <span className={"px-4 flex justify-end"}>
+            <Link href={'/profile'}>
+              <span className={'px-4 flex justify-end'}>
                 <span>My Profile</span>
                 <svg
                   className="w-6 h-6 ml-2"
@@ -95,11 +95,11 @@ export const Nav = ({}: NavType) => {
           {/*Добавлять border-r-4 border-purple-700 при выборе*/}
           <li
             className={
-              "font-bold py-1 hover:text-gray-900 border-r-4 border-white"
+              'font-bold py-1 hover:text-gray-900 border-r-4 border-white'
             }
           >
-            <Link href={"/tickets"}>
-              <span className={"px-4 flex justify-end"}>
+            <Link href={'/tickets'}>
+              <span className={'px-4 flex justify-end'}>
                 <span>My Tickets</span>
                 <svg
                   className="w-6 h-6 ml-2"
