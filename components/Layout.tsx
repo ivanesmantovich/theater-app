@@ -1,6 +1,6 @@
 import React from "react";
 import Nav from "./Nav";
-import LogSign from "./LogSign";
+import LogSign from "./NavSignUpLogIn";
 
 type LayoutType = {
   children: any;
