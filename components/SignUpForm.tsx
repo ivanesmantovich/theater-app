@@ -5,10 +5,7 @@ import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
-import { FieldHookConfig } from 'formik';
 
 type MyRadioProps = { label: string } & FieldAttributes<{}>; // FieldAttributes для того чтобы передавать пропы в кастомный компонент
 
