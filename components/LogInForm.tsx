@@ -6,6 +6,7 @@ import { TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
+import { signIn } from 'next-auth/react';
 
 type MyRadioProps = { label: string } & FieldAttributes<{}>; // FieldAttributes для того чтобы передавать пропы в кастомный компонент
 
@@ -65,7 +66,10 @@ export const LogInForm = ({}: logInFormType) => {
             // Вызывается на сабмите формы, в data содержатся поля на момент сабмита
             setSubmitting(true);
             // Делаю async вызов/реквест
-            // ...
+            signIn('credentials', {
+              email: data.email,
+              password: data.password,
+            });
             // Делаю async вызов/реквест
             setSubmitting(false);
             console.log('submit:', data);
@@ -99,7 +103,7 @@ export const LogInForm = ({}: logInFormType) => {
                 </Grid>
               </Grid>
               {/*Показывать текущее содержание полей*/}
-              {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
+              <pre>{JSON.stringify(values, null, 2)}</pre>
               {/*Показывать текущее содержание полей*/}
             </Form>
           )}

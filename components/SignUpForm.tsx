@@ -7,9 +7,6 @@ import Grid from '@mui/material/Grid';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import { Prisma } from '.prisma/client';
-import axios from 'axios';
-import { fetcher } from '../utils/fetcher';
-// import { useQuery, useMutation, QueryCache } from 'react-query';
 
 type MyRadioProps = { label: string } & FieldAttributes<{}>; // FieldAttributes для того чтобы передавать пропы в кастомный компонент
 
@@ -104,7 +101,16 @@ export const SignUpForm = ({}: signUpFormType) => {
               age: data.age,
               gender: data.gender,
             };
-            await fetcher('/api/create', { user: userData });
+            await fetch('http://localhost:3000/api/create', {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ user: userData }),
+            }).then((r) => {
+              return r.json();
+            });
             // Делаю async вызов/реквест
             setSubmitting(false);
             console.log('submit:', data);

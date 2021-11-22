@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import LogInForm from '../components/LogInForm';
+import LogInForm from '../../components/LogInForm';
 
 type signUpType = {};
 

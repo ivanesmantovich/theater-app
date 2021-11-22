@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Theater from '../components/Theater';
+import { useSession } from 'next-auth/react';
 
 export default function Home() {
   return (
