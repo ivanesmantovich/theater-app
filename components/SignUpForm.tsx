@@ -6,6 +6,10 @@ import { TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
+import { Prisma } from '.prisma/client';
+import axios from 'axios';
+import { fetcher } from '../utils/fetcher';
+// import { useQuery, useMutation, QueryCache } from 'react-query';
 
 type MyRadioProps = { label: string } & FieldAttributes<{}>; // FieldAttributes для того чтобы передавать пропы в кастомный компонент
 
@@ -39,6 +43,16 @@ const MyTextField: React.FC<FieldAttributes<{}>> = ({
 
 type signUpFormType = {};
 
+interface SignUpFormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  age?: number;
+  gender?: 'm' | 'f' | 'o';
+}
+
 export const SignUpForm = ({}: signUpFormType) => {
   // Validation
   const validationSchema = Yup.object({
@@ -62,6 +76,13 @@ export const SignUpForm = ({}: signUpFormType) => {
   });
   // Validation
 
+  const initialValues: SignUpFormValues = {
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    confirmPassword: '',
+  };
   return (
     <>
       <header>
@@ -70,19 +91,20 @@ export const SignUpForm = ({}: signUpFormType) => {
 
       <div className={'mt-10'}>
         <Formik
-          initialValues={{
-            email: '',
-            firstName: '',
-            lastName: '',
-            password: '',
-            gender: '',
-            age: '',
-          }}
-          onSubmit={(data, { setSubmitting }) => {
+          initialValues={initialValues}
+          onSubmit={async (data, { setSubmitting }) => {
             // Вызывается на сабмите формы, в data содержатся поля на момент сабмита
             setSubmitting(true);
             // Делаю async вызов/реквест
-            // ...
+            const userData: Prisma.UserCreateInput = {
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              password: data.password,
+              age: data.age,
+              gender: data.gender,
+            };
+            await fetcher('/api/create', { user: userData });
             // Делаю async вызов/реквест
             setSubmitting(false);
             console.log('submit:', data);
@@ -154,11 +176,13 @@ export const SignUpForm = ({}: signUpFormType) => {
                     size="large"
                     type="submit"
                   >
-                    Submit
+                    Sign Up
                   </Button>
                 </Grid>
               </Grid>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
+              {/*Показывать текущее содержание полей*/}
+              {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
+              {/*Показывать текущее содержание полей*/}
             </Form>
           )}
         </Formik>

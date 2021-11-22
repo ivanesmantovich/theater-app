@@ -9,9 +9,9 @@ export const LogSign = ({}: LogSignType) => {
       <Link href="/signup">
         <span className={'button transition-colors'}>Sign up</span>
       </Link>
-      <a className={'button ml-2 transition-colors'} href="#">
-        Log in
-      </a>
+      <Link href="/login">
+        <span className={'button ml-2 transition-colors'}>Log In</span>
+      </Link>
     </div>
   );
 };
