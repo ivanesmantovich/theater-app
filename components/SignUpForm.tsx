@@ -6,7 +6,10 @@ import { TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
-import { Prisma } from '.prisma/client';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../ts/firestoreConfig';
+import { doc, addDoc, setDoc } from 'firebase/firestore';
+import { usersRef } from '../ts/firestoreConfig';
 
 type MyRadioProps = { label: string } & FieldAttributes<{}>; // FieldAttributes для того чтобы передавать пропы в кастомный компонент
 
@@ -92,26 +95,35 @@ export const SignUpForm = ({}: signUpFormType) => {
           onSubmit={async (data, { setSubmitting }) => {
             // Вызывается на сабмите формы, в data содержатся поля на момент сабмита
             setSubmitting(true);
+
             // Делаю async вызов/реквест
-            const userData: Prisma.UserCreateInput = {
-              firstName: data.firstName,
-              lastName: data.lastName,
-              email: data.email,
-              password: data.password,
-              age: data.age,
-              gender: data.gender,
-            };
-            await fetch('http://localhost:3000/api/create', {
-              method: 'POST',
-              credentials: 'include',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ user: userData }),
-            }).then((r) => {
-              return r.json();
-            });
-            // Делаю async вызов/реквест
+            createUserWithEmailAndPassword(auth, data.email, data.password)
+              .then((registeredUser) => {
+                const user = registeredUser.user;
+                // addDoc(usersRef, {
+                //   email: data.email,
+                //   password: data.password,
+                //   firstName: data.firstName,
+                //   lastName: data.lastName,
+                //   age: data.age,
+                //   gender: data.gender,
+                // }).then(() => {
+                setDoc(doc(db, 'users', user.uid), {
+                  email: data.email,
+                  password: data.password,
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  age: data.age,
+                  gender: data.gender,
+                }).then(() => {
+                  console.log('Added user to the collection');
+                });
+                console.log(user);
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+              });
             setSubmitting(false);
             console.log('submit:', data);
           }}

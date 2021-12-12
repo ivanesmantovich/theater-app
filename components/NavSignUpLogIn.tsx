@@ -1,24 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../ts/firestoreConfig';
 
 type LogSignType = {};
-
 export const LogSign = ({}: LogSignType) => {
-  const { data: session } = useSession();
   const router = useRouter();
-  console.log('session:', session);
+  const [isLoggedIn, setIsLoggedIn] = useState(auth.currentUser !== null);
+  const unsubAuth = onAuthStateChanged(auth, (user) => {
+    setIsLoggedIn(auth.currentUser !== null);
+  });
 
   return (
     <div className={'flex justify-center md:justify-end'}>
       <Link href="/auth/signup">
         <span className={'button transition-colors'}>Sign up</span>
       </Link>
-      {session ? (
+      {isLoggedIn ? (
         <button
           className={'button ml-2 transition-colors'}
-          onClick={() => signOut()}
+          onClick={() => {
+            signOut(auth)
+              .then(() => {
+                console.log('User signed out');
+              })
+              .catch((error) => {
+                console.log(error.message);
+              });
+            unsubAuth();
+          }}
         >
           Log Out
         </button>

@@ -1,6 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import donnie from '../public/img/donnie.jpg';
+import harry from '../public/img/harry.jpg';
+import runner from '../public/img/runner.jpg';
+import fink from '../public/img/fink.jpg';
+import jagten from '../public/img/jagten.jpg';
+import favourite from '../public/img/favourite.jpg';
+import { MoviePreview } from './MoviePreview';
 
 type BoxOfficeType = {};
 
@@ -12,64 +18,53 @@ export const BoxOffice = ({}: BoxOfficeType) => {
       </h4>
 
       <div className={'mt-8 grid lg:grid-cols-3 gap-10'}>
-        {/*/!*cards*!/ То, что выходит за пределы карточки прячется за счет overflow-hidden*/}
+        <MoviePreview
+          movieId={1}
+          src={runner}
+          title={'Blade Runner'}
+          author={'Ridley Scott'}
+          length={'1h 57min'}
+        />
 
-        <div className={'card hover:shadow-xl transition-shadow'}>
-          <img className={'image'} src="/img/donnie.jpg" alt="donnie" />
-          <div className={'m-4'}>
-            <span className={'font-bold'}>Donnie Darko</span>
-            <span className={'block text-gray-500 text-sm'}>Richard Kelly</span>
-          </div>
-          <div className={'length'}>
-            {' '}
-            <svg
-              className="inline-block w-4 h-4 mr-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            <span>1h 53min</span>
-          </div>
-        </div>
-      </div>
+        <MoviePreview
+          movieId={2}
+          src={donnie}
+          title={'Donnie Darko'}
+          author={'Richard Kelly'}
+          length={'1h 53min'}
+        />
 
-      <h4 className={'font-bold mt-12 pb-2 border-b border-gray-200'}>
-        Box Office
-      </h4>
-      <div className={'mt-8 grid lg:grid-cols-3 gap-10'}>
-        {/*cards*/}
-        <div className={'card hover:shadow-xl transition-shadow'}>
-          <img className={'image'} src="/img/donnie.jpg" alt="donnie" />
-          <div className={'m-4'}>
-            <span className={'font-bold'}>Donnie Darko</span>
-            <span className={'block text-gray-500 text-sm'}>Richard Kelly</span>
-          </div>
-          <div className={'length'}>
-            <svg
-              className="inline-block w-4 h-4 mr-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            <span>1h 53min</span>
-          </div>
-        </div>
+        <MoviePreview
+          movieId={3}
+          src={harry}
+          title={"Harry Potter: Sorcerer's Stone"}
+          author={'Chris Columbus'}
+          length={'2h 32min'}
+        />
+
+        <MoviePreview
+          movieId={4}
+          src={favourite}
+          title={'The Favourite'}
+          author={'Yorgos Lanthimos'}
+          length={'1h 59min'}
+        />
+
+        <MoviePreview
+          movieId={5}
+          src={jagten}
+          title={'The Hunt'}
+          author={'Thomas Vinterberg'}
+          length={'1h 55min'}
+        />
+
+        <MoviePreview
+          movieId={6}
+          src={fink}
+          title={'Barton Fink'}
+          author={'Joel Coen, Ethan Coen'}
+          length={'1h 56min'}
+        />
       </div>
     </div>
   );

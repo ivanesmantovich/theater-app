@@ -6,7 +6,8 @@ import { TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
-import { signIn } from 'next-auth/react';
+import { auth } from '../ts/firestoreConfig';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 type MyRadioProps = { label: string } & FieldAttributes<{}>; // FieldAttributes для того чтобы передавать пропы в кастомный компонент
 
@@ -55,7 +56,6 @@ export const LogInForm = ({}: logInFormType) => {
       <header>
         <h2 className={'text-6xl text-purple-700 font-semibold'}>Log In</h2>
       </header>
-
       <div className={'mt-10'}>
         <Formik
           initialValues={{
@@ -66,11 +66,13 @@ export const LogInForm = ({}: logInFormType) => {
             // Вызывается на сабмите формы, в data содержатся поля на момент сабмита
             setSubmitting(true);
             // Делаю async вызов/реквест
-            signIn('credentials', {
-              email: data.email,
-              password: data.password,
-            });
-            // Делаю async вызов/реквест
+            signInWithEmailAndPassword(auth, data.email, data.password)
+              .then((loggedInUser) => {
+                console.log('user logged in:', loggedInUser.user);
+              })
+              .catch((error) => {
+                console.log(error.message);
+              });
             setSubmitting(false);
             console.log('submit:', data);
           }}
