@@ -204,7 +204,6 @@ export const SignUpForm = ({}: signUpFormType) => {
               </Grid>
               {/*Показывать текущее содержание полей*/}
               {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
-              {/*Показывать текущее содержание полей*/}
             </Form>
           )}
         </Formik>

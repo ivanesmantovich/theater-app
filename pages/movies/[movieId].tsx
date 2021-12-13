@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { moviesInfo } from '../../ts/moviesInfo';
 import InfoPart from '../../components/InfoPart';
+import CreateSession from '../../components/CreateSession';
 
 type movieType = {};
 
@@ -22,6 +23,8 @@ const Movie = ({}: movieType) => {
         <h2 className={'text-6xl text-purple-700 font-semibold'}>
           {movie.title}
         </h2>
+      </header>
+      <main>
         <div className="mt-6 grid grid-cols-2">
           <div>
             <img
@@ -42,8 +45,8 @@ const Movie = ({}: movieType) => {
             />
           </div>
         </div>
-      </header>
-      <main className={'mt-2'}></main>
+        <CreateSession/>
+      </main>
     </>
   );
 };

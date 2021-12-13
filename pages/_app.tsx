@@ -2,6 +2,8 @@ import '../styles/globals.css';
 import Layout from '../components/Layout';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FirebaseAuthProvider } from '../store/auth-context';
+import { LocalizationProvider } from '@mui/lab';
+import DateAdapter from '@mui/lab/AdapterDateFns';
 
 const theme = createTheme({
   typography: {
@@ -17,11 +19,13 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <FirebaseAuthProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </FirebaseAuthProvider>
+      <LocalizationProvider dateAdapter={DateAdapter}>
+        <FirebaseAuthProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </FirebaseAuthProvider>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }
