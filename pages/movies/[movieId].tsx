@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { moviesInfo } from '../../ts/moviesInfo';
 import InfoPart from '../../components/InfoPart';
 import CreateSession from '../../components/CreateSession';
+import MovieSessions from '../../components/MovieSessions';
 
 type movieType = {};
 
@@ -25,7 +26,7 @@ const Movie = ({}: movieType) => {
         </h2>
       </header>
       <main>
-        <div className="mt-6 grid grid-cols-2">
+        <div className="mt-6 grid grid-cols-3">
           <div>
             <img
               className={'w-11/12'}
@@ -45,7 +46,8 @@ const Movie = ({}: movieType) => {
             />
           </div>
         </div>
-        <CreateSession/>
+        <MovieSessions movieId={movieId} />
+        <CreateSession movieId={movieId} />
       </main>
     </>
   );

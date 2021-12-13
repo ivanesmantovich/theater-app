@@ -11,7 +11,11 @@ import { DateTimePicker, StaticTimePicker } from '@mui/lab';
 import { addDoc } from 'firebase/firestore';
 import { sessionsRef } from '../ts/firestoreConfig';
 
-function CreateSession() {
+type CreateSessionType = {
+  movieId: string | string []
+}
+
+function CreateSession({movieId}: CreateSessionType) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [date, setDate] = React.useState(new Date());
   const [gender, setGender] = React.useState('Any');
@@ -35,6 +39,7 @@ function CreateSession() {
     setIsOpen(false);
     console.log({ date, gender, ageDiff, maxPeople });
     addDoc(sessionsRef, {
+      movieId: movieId,
       date: date,
       gender: gender,
       ageDiff: ageDiff,
