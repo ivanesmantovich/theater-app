@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
+import { FirebaseAuthContext } from '../store/auth-context';
 
 type NavType = {};
 
 export const Nav = ({}: NavType) => {
+  const context = useContext(FirebaseAuthContext);
+  const userId = context.userId;
+
   return (
     <div className={'md:col-span-1 md:flex md:justify-end'}>
       <nav className={'text-right'}>
@@ -67,57 +71,61 @@ export const Nav = ({}: NavType) => {
             </Link>
           </li>
           {/*Добавлять border-r-4 border-purple-700 при выборе*/}
-          <li
-            className={
-              'font-bold py-1 hover:text-gray-900 border-r-4 border-white'
-            }
-          >
-            <Link href={'/profile'}>
-              <span className={'px-4 flex justify-end'}>
-                <span>My Profile</span>
-                <svg
-                  className="w-6 h-6 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  ></path>
-                </svg>
-              </span>
-            </Link>
-          </li>
+          {userId !== null && (
+            <li
+              className={
+                'font-bold py-1 hover:text-gray-900 border-r-4 border-white'
+              }
+            >
+              <Link href={'/profile'}>
+                <span className={'px-4 flex justify-end'}>
+                  <span>My Profile</span>
+                  <svg
+                    className="w-6 h-6 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    ></path>
+                  </svg>
+                </span>
+              </Link>
+            </li>
+          )}
           {/*Добавлять border-r-4 border-purple-700 при выборе*/}
-          <li
-            className={
-              'font-bold py-1 hover:text-gray-900 border-r-4 border-white'
-            }
-          >
-            <Link href={'/tickets'}>
-              <span className={'px-4 flex justify-end'}>
-                <span>My Tickets</span>
-                <svg
-                  className="w-6 h-6 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
-                  ></path>
-                </svg>
-              </span>
-            </Link>
-          </li>
+          {userId !== null && (
+            <li
+              className={
+                'font-bold py-1 hover:text-gray-900 border-r-4 border-white'
+              }
+            >
+              <Link href={'/tickets'}>
+                <span className={'px-4 flex justify-end'}>
+                  <span>My Tickets</span>
+                  <svg
+                    className="w-6 h-6 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+                    ></path>
+                  </svg>
+                </span>
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
     </div>

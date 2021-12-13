@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Formik, Form, Field, useField, FieldAttributes } from 'formik';
 import * as Yup from 'yup';
 import Button from '@mui/material/Button';
@@ -10,6 +10,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../ts/firestoreConfig';
 import { doc, addDoc, setDoc } from 'firebase/firestore';
 import { usersRef } from '../ts/firestoreConfig';
+import { FirebaseAuthContext } from '../store/auth-context';
 
 type MyRadioProps = { label: string } & FieldAttributes<{}>; // FieldAttributes для того чтобы передавать пропы в кастомный компонент
 
@@ -55,6 +56,9 @@ interface SignUpFormValues {
 
 export const SignUpForm = ({}: signUpFormType) => {
   const [isLoading, setIsLoading] = useState(false);
+  const context = useContext(FirebaseAuthContext);
+  const userId = context.userId;
+
   // Validation
   const validationSchema = Yup.object({
     email: Yup.string().email('Email is invalid').required('Required'),
@@ -111,6 +115,7 @@ export const SignUpForm = ({}: signUpFormType) => {
                   gender: data.gender,
                 }).then(() => {
                   console.log('Added user to the collection');
+                  window.location.href = '/';
                 });
                 console.log(user);
               })

@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import Layout from '../components/Layout';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { FirebaseAuthProvider } from '../store/auth-context';
 
 const theme = createTheme({
   typography: {
@@ -16,9 +17,11 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <FirebaseAuthProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </FirebaseAuthProvider>
     </ThemeProvider>
   );
 }

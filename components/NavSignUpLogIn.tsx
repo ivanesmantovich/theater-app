@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../ts/firestoreConfig';
+import { FirebaseAuthContext } from '../store/auth-context';
 
 type LogSignType = {};
 export const LogSign = ({}: LogSignType) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(auth.currentUser !== null);
-  const unsubAuth = onAuthStateChanged(auth, (user) => {
-    setIsLoggedIn(auth.currentUser !== null);
-  });
+  const context = useContext(FirebaseAuthContext);
+  const userId = context.userId;
 
   return (
     <div className={'flex justify-center md:justify-end'}>
-      {isLoggedIn ? (
-        <button
-          className={'button ml-2 transition-colors'}
-          onClick={() => {
-            signOut(auth)
-              .then(() => {
-                console.log('User signed out');
-              })
-              .catch((error) => {
-                console.log(error.message);
-              });
-            unsubAuth();
-          }}
-        >
-          Log Out
-        </button>
+      {userId !== null ? (
+        <Link href={'/'}>
+          <span
+            className={'button ml-2 transition-colors'}
+            onClick={() => {
+              signOut(auth)
+                .then(() => {
+                  console.log('User signed out');
+                })
+                .catch((error) => {
+                  console.log(error.message);
+                });
+            }}
+          >
+            Log Out
+          </span>
+        </Link>
       ) : (
         <>
           <Link href="/auth/signup">

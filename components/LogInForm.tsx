@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Formik, Form, Field, useField, FieldAttributes } from 'formik';
 import * as Yup from 'yup';
 import Button from '@mui/material/Button';
@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import { auth } from '../ts/firestoreConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseAuthContext } from '../store/auth-context';
 
 type MyRadioProps = { label: string } & FieldAttributes<{}>; // FieldAttributes для того чтобы передавать пропы в кастомный компонент
 
@@ -43,14 +44,18 @@ type logInFormType = {};
 
 export const LogInForm = ({}: logInFormType) => {
   const [isLoading, setIsLoading] = useState(false);
-  // Validation
+  const context = useContext(FirebaseAuthContext);
+  const userId = context.userId;
   const validationSchema = Yup.object({
     email: Yup.string().email('Email is invalid').required('Required'),
     password: Yup.string()
       .min(6, 'Password must be at least 6 characters')
       .required('Required'),
   });
-  // Validation
+
+  useEffect(() => {
+    if (userId !== null) window.location.href = '/';
+  }, [userId]);
 
   return (
     <>

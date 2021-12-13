@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { auth, db } from '../ts/firestoreConfig';
 import { doc, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import { FirebaseAuthContext } from '../store/auth-context';
 
 type profileType = {};
 
 const Profile = ({}: profileType) => {
-  const [userId, setUserId] = useState('');
+  const context = useContext(FirebaseAuthContext);
+  const userId = context.userId;
   const [fetchedData, setFetchedData] = useState({});
-  const unsubAuth = onAuthStateChanged(auth, (user) => {
-    setUserId(user.uid);
-  });
 
   const getUserData = async () => {
-    if (userId !== '') {
+    if (userId !== null) {
       const docRef = doc(db, 'users', userId);
       const userDoc = await getDoc(docRef);
       return userDoc.data();
-      // return userData;
     }
   };
 
@@ -52,7 +50,7 @@ const Profile = ({}: profileType) => {
         <p>{fetchedData.age}</p>
         <h3 className={'text-2xl font-semibold'}>Gender:</h3>
         {/*@ts-ignore*/}
-        <p>{fetchedData.gender === 'm' ? 'Male' : 'Female'}</p>
+        <p>{fetchedData.gender}</p>
       </main>
     </>
   );
