@@ -8,6 +8,8 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { Button, InputLabel, MenuItem, Select } from '@mui/material';
 import { setDate } from 'date-fns/esm';
 import { DateTimePicker, StaticTimePicker } from '@mui/lab';
+import { addDoc } from 'firebase/firestore';
+import { sessionsRef } from '../ts/firestoreConfig';
 
 function CreateSession() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -32,6 +34,14 @@ function CreateSession() {
     event.preventDefault();
     setIsOpen(false);
     console.log({ date, gender, ageDiff, maxPeople });
+    addDoc(sessionsRef, {
+      date: date,
+      gender: gender,
+      ageDiff: ageDiff,
+      maxPeople: maxPeople,
+    }).then(() => {
+      console.log('Session created');
+    });
   };
 
   return (
