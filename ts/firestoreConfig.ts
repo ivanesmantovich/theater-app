@@ -17,6 +17,7 @@ export const auth = getAuth(app);
 
 // Ссылка на коллекцию юзеров
 export const usersRef = collection(db, 'users');
+export const sessionsRef = collection(db, 'sessions');
 
 // Получить данные из коллекции
 getDocs(usersRef)

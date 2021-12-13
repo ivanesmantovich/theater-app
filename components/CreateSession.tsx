@@ -7,37 +7,35 @@ import TimePicker from '@mui/lab/TimePicker';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { Button, InputLabel, MenuItem, Select } from '@mui/material';
 import { setDate } from 'date-fns/esm';
-import { StaticTimePicker } from '@mui/lab';
+import { DateTimePicker, StaticTimePicker } from '@mui/lab';
 
 function CreateSession() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [date, setDate] = React.useState('2014-08-18');
-  const [time, setTime] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [date, setDate] = React.useState(new Date());
   const [gender, setGender] = React.useState('Any');
   const [ageDiff, setAgeDiff] = React.useState("Doesn't matter");
-
-  const handleDateChange = (newDate) => {
-    setDate(newDate);
-    console.log(newDate);
-  };
-
-  const handleTimeChange = (newTime) => {
-    setTime(newTime);
-    console.log(newTime);
-  };
+  const [maxPeople, setMaxPeople] = React.useState('10');
 
   const handleGenderChange = (event) => {
     setGender(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleAgeDiffChange = (event) => {
     setAgeDiff(event.target.value);
-    console.log(event.target.value);
+  };
+
+  const handleMaxPeopleChange = (event) => {
+    setMaxPeople(event.target.value);
+  };
+
+  const createSessionHandler = (event) => {
+    event.preventDefault();
+    setIsOpen(false);
+    console.log({ date, gender, ageDiff, maxPeople });
   };
 
   return (
-    <div className="mt-5">
+    <form onSubmit={createSessionHandler} className="mt-5">
       {!isOpen && (
         <>
           <Button
@@ -55,21 +53,16 @@ function CreateSession() {
       {isOpen && (
         <>
           <div className="mb-3">
-            <DesktopDatePicker
-              label="Date"
-              inputFormat="MM/dd/yyyy"
-              value={date}
-              onChange={handleDateChange}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </div>
-          <div className="mb-3">
-            <TimePicker
-              label="Time"
-              value={time}
-              onChange={handleTimeChange}
-              renderInput={(params) => <TextField {...params} />}
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                renderInput={(props) => <TextField {...props} />}
+                label="Date and time"
+                value={date}
+                onChange={(newDate) => {
+                  setDate(newDate);
+                }}
+              />
+            </LocalizationProvider>
           </div>
           <div className="mb-3">
             <InputLabel id="gender-label">Gender</InputLabel>
@@ -93,7 +86,7 @@ function CreateSession() {
               id="ageDiff"
               value={ageDiff}
               label="Age Difference"
-              onChange={handleGenderChange}
+              onChange={handleAgeDiffChange}
             >
               <MenuItem value={'1'}>+/- 1</MenuItem>
               <MenuItem value={'2'}>+/- 2</MenuItem>
@@ -103,21 +96,51 @@ function CreateSession() {
               <MenuItem value={"Doesn't matter"}>Doesn't matter</MenuItem>
             </Select>
           </div>
+          <div className="mb-3">
+            <InputLabel id="maxPeople-label">Max Amount of People</InputLabel>
+            <Select
+              labelId="maxPeople-label"
+              id="maxPeople"
+              value={maxPeople}
+              label="Max Amount of People"
+              onChange={handleMaxPeopleChange}
+            >
+              <MenuItem value={'10'}>10</MenuItem>
+              <MenuItem value={'20'}>20</MenuItem>
+              <MenuItem value={'30'}>30</MenuItem>
+              <MenuItem value={'40'}>40</MenuItem>
+              <MenuItem value={'50'}>50</MenuItem>
+            </Select>
+          </div>
         </>
       )}
       {isOpen && (
-        <Button
-          variant="contained"
-          disableElevation
-          size="large"
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        >
-          Cancel Session Creation
-        </Button>
+        <>
+          <span className="mr-3">
+            <Button
+              variant="contained"
+              color="error"
+              disableElevation
+              size="large"
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </span>
+          <Button
+            variant="contained"
+            color="success"
+            disableElevation
+            size="large"
+            type="submit"
+          >
+            Create
+          </Button>
+        </>
       )}
-    </div>
+    </form>
   );
 }
 
