@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, useField, FieldAttributes } from 'formik';
 import * as Yup from 'yup';
 import Button from '@mui/material/Button';
@@ -50,10 +50,11 @@ interface SignUpFormValues {
   password: string;
   confirmPassword: string;
   age?: number;
-  gender?: 'm' | 'f' | 'o';
+  gender?: 'Male' | 'Female' | 'Other';
 }
 
 export const SignUpForm = ({}: signUpFormType) => {
+  const [isLoading, setIsLoading] = useState(false);
   // Validation
   const validationSchema = Yup.object({
     email: Yup.string().email('Email is invalid').required('Required'),
@@ -95,19 +96,12 @@ export const SignUpForm = ({}: signUpFormType) => {
           onSubmit={async (data, { setSubmitting }) => {
             // Вызывается на сабмите формы, в data содержатся поля на момент сабмита
             setSubmitting(true);
+            setIsLoading(true);
 
             // Делаю async вызов/реквест
             createUserWithEmailAndPassword(auth, data.email, data.password)
               .then((registeredUser) => {
                 const user = registeredUser.user;
-                // addDoc(usersRef, {
-                //   email: data.email,
-                //   password: data.password,
-                //   firstName: data.firstName,
-                //   lastName: data.lastName,
-                //   age: data.age,
-                //   gender: data.gender,
-                // }).then(() => {
                 setDoc(doc(db, 'users', user.uid), {
                   email: data.email,
                   password: data.password,
@@ -125,6 +119,7 @@ export const SignUpForm = ({}: signUpFormType) => {
                 const errorMessage = error.message;
               });
             setSubmitting(false);
+            setIsLoading(false);
             console.log('submit:', data);
           }}
           validationSchema={validationSchema}
@@ -164,7 +159,7 @@ export const SignUpForm = ({}: signUpFormType) => {
                   <div>
                     <MyRadio
                       name="gender"
-                      value="m"
+                      value="Male"
                       type="radio"
                       label="Male"
                     />
@@ -172,7 +167,7 @@ export const SignUpForm = ({}: signUpFormType) => {
                   <div>
                     <MyRadio
                       name="gender"
-                      value="f"
+                      value="Female"
                       type="radio"
                       label="Female"
                     />
@@ -181,21 +176,25 @@ export const SignUpForm = ({}: signUpFormType) => {
                     <MyRadio
                       checked={true}
                       name="gender"
-                      value="o"
+                      value="Other"
                       type="radio"
                       label="Other"
                     />
                   </div>
                 </Grid>
                 <Grid item xs={12}>
-                  <Button
-                    variant="contained"
-                    disableElevation
-                    size="large"
-                    type="submit"
-                  >
-                    Sign Up
-                  </Button>
+                  {isLoading ? (
+                    <p className="font-semibold text-xl">Loading...</p>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      disableElevation
+                      size="large"
+                      type="submit"
+                    >
+                      Sign Up
+                    </Button>
+                  )}
                 </Grid>
               </Grid>
               {/*Показывать текущее содержание полей*/}

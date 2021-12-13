@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, useField, FieldAttributes } from 'formik';
 import * as Yup from 'yup';
 import Button from '@mui/material/Button';
@@ -42,6 +42,7 @@ const MyTextField: React.FC<FieldAttributes<{}>> = ({
 type logInFormType = {};
 
 export const LogInForm = ({}: logInFormType) => {
+  const [isLoading, setIsLoading] = useState(false);
   // Validation
   const validationSchema = Yup.object({
     email: Yup.string().email('Email is invalid').required('Required'),
@@ -65,15 +66,17 @@ export const LogInForm = ({}: logInFormType) => {
           onSubmit={(data, { setSubmitting }) => {
             // Вызывается на сабмите формы, в data содержатся поля на момент сабмита
             setSubmitting(true);
+            setIsLoading(true);
             // Делаю async вызов/реквест
             signInWithEmailAndPassword(auth, data.email, data.password)
               .then((loggedInUser) => {
                 console.log('user logged in:', loggedInUser.user);
               })
               .catch((error) => {
-                console.log(error.message);
+                console.log('Error Message:', error.message);
               });
             setSubmitting(false);
+            setIsLoading(false);
             console.log('submit:', data);
           }}
           validationSchema={validationSchema}
@@ -94,14 +97,18 @@ export const LogInForm = ({}: logInFormType) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button
-                    variant="contained"
-                    disableElevation
-                    size="large"
-                    type="submit"
-                  >
-                    Log In
-                  </Button>
+                  {isLoading ? (
+                    <p className="font-semibold text-xl">Loading...</p>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      disableElevation
+                      size="large"
+                      type="submit"
+                    >
+                      Log In
+                    </Button>
+                  )}
                 </Grid>
               </Grid>
               {/*Показывать текущее содержание полей*/}
