@@ -7,13 +7,11 @@ export const Tickets = ({}: ticketsType) => {
   return (
     <>
       <Head>
-        <title>Theater App | Tickets</title>
+        <title>Theater App | Sessions</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
-        <h2 className={'text-6xl text-purple-700 font-semibold'}>
-          Your Tickets
-        </h2>
+        <h2 className={'text-6xl text-purple-700 font-semibold'}>Sessions</h2>
       </header>
     </>
   );

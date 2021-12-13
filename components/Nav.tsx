@@ -105,22 +105,22 @@ export const Nav = ({}: NavType) => {
                 'font-bold py-1 hover:text-gray-900 border-r-4 border-white'
               }
             >
-              <Link href={'/tickets'}>
+              <Link href={'/sessions'}>
                 <span className={'px-4 flex justify-end'}>
-                  <span>My Tickets</span>
+                  <span>Sessions</span>
                   <svg
+                    xmlns="http://www.w3.org/2000/svg"
                     className="w-6 h-6 ml-2"
                     fill="none"
-                    stroke="currentColor"
                     viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
+                    stroke="currentColor"
                   >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width="2"
-                      d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
-                    ></path>
+                      d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+                    />
                   </svg>
                 </span>
               </Link>
