@@ -1,10 +1,3 @@
-import donniePoster from '../public/img/donniePoster.png';
-import harryPoster from '../public/img/harryPoster.jpeg';
-import runnerPoster from '../public/img/runnerPoster.jpeg';
-import finkPoster from '../public/img/finkPoster.png';
-import jagtenPoster from '../public/img/jagtenPoster.jpg';
-import favouritePoster from '../public/img/favouritePoster.jpeg';
-
 export const moviesInfo = [
   {
     id: 1,

@@ -6,7 +6,6 @@ import { auth } from '../ts/firestoreConfig';
 
 type LogSignType = {};
 export const LogSign = ({}: LogSignType) => {
-  const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(auth.currentUser !== null);
   const unsubAuth = onAuthStateChanged(auth, (user) => {
     setIsLoggedIn(auth.currentUser !== null);
@@ -14,9 +13,6 @@ export const LogSign = ({}: LogSignType) => {
 
   return (
     <div className={'flex justify-center md:justify-end'}>
-      <Link href="/auth/signup">
-        <span className={'button transition-colors'}>Sign up</span>
-      </Link>
       {isLoggedIn ? (
         <button
           className={'button ml-2 transition-colors'}
@@ -34,9 +30,14 @@ export const LogSign = ({}: LogSignType) => {
           Log Out
         </button>
       ) : (
-        <Link href="/auth/login">
-          <span className={'button ml-2 transition-colors'}>Log In</span>
-        </Link>
+        <>
+          <Link href="/auth/signup">
+            <span className={'button transition-colors'}>Sign up</span>
+          </Link>
+          <Link href="/auth/login">
+            <span className={'button ml-2 transition-colors'}>Log In</span>
+          </Link>
+        </>
       )}
     </div>
   );

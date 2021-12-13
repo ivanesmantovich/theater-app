@@ -15,7 +15,6 @@ const Movie = ({}: movieType) => {
   return (
     <>
       <Head>
-        {/*<title>Theater App | Profile</title>*/}
         <title>{`Theater App | ${movieId}`}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -23,15 +22,6 @@ const Movie = ({}: movieType) => {
         <h2 className={'text-6xl text-purple-700 font-semibold'}>
           {movie.title}
         </h2>
-        {/*<div className="relative w-96 h-96 flex mr-2">*/}
-        {/*  <Image*/}
-        {/*    className="top-5"*/}
-        {/*    src={movie.posterSrc}*/}
-        {/*    layout={'fill'}*/}
-        {/*    objectFit={'contain'}*/}
-        {/*    alt="poster"*/}
-        {/*  />*/}
-        {/*</div>*/}
         <div className="mt-6 grid grid-cols-2">
           <div>
             <img
