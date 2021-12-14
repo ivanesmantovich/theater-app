@@ -9,7 +9,7 @@ type MoviePreviewType = {
   length: string;
 };
 
-export const MoviePreview = ({
+const MoviePreview = ({
   movieId,
   src,
   title,
@@ -18,7 +18,11 @@ export const MoviePreview = ({
 }: MoviePreviewType) => {
   return (
     <Link href={`/movies/${movieId}`}>
-      <div className={'card hover:shadow-xl transition-shadow'}>
+      <div
+        className={
+          'card hover:shadow-xl hover:cursor-pointer transition-shadow'
+        }
+      >
         <Image src={src} alt="moviePic" />
         <div className={'m-4'}>
           <span className={'font-bold'}>{title}</span>
@@ -46,3 +50,5 @@ export const MoviePreview = ({
     </Link>
   );
 };
+
+export default MoviePreview;

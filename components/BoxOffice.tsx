@@ -6,11 +6,11 @@ import runner from '../public/img/runner.jpg';
 import fink from '../public/img/fink.jpg';
 import jagten from '../public/img/jagten.jpg';
 import favourite from '../public/img/favourite.jpg';
-import { MoviePreview } from './MoviePreview';
+import MoviePreview from './MoviePreview';
 
 type BoxOfficeType = {};
 
-export const BoxOffice = ({}: BoxOfficeType) => {
+const BoxOffice = ({}: BoxOfficeType) => {
   return (
     <div>
       <h4 className={'font-bold mt-12 pb-2 border-b border-gray-200'}>

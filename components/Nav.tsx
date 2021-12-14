@@ -47,7 +47,7 @@ export const Nav = ({}: NavType) => {
         >
           <li
             className={
-              'font-bold py-1 border-r-4 border-purple-700 hover:text-gray-900'
+              'font-bold py-1 border-r-4 border-purple-700 hover:text-gray-900 hover:cursor-pointer'
             }
           >
             <Link href={'/'}>
@@ -74,7 +74,7 @@ export const Nav = ({}: NavType) => {
           {userId !== null && (
             <li
               className={
-                'font-bold py-1 hover:text-gray-900 border-r-4 border-white'
+                'font-bold py-1 hover:text-gray-900 border-r-4 border-white hover:cursor-pointer'
               }
             >
               <Link href={'/profile'}>
@@ -102,7 +102,7 @@ export const Nav = ({}: NavType) => {
           {userId !== null && (
             <li
               className={
-                'font-bold py-1 hover:text-gray-900 border-r-4 border-white'
+                'font-bold py-1 hover:text-gray-900 border-r-4 border-white hover:cursor-pointer'
               }
             >
               <Link href={'/sessions'}>
