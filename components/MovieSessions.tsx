@@ -1,11 +1,4 @@
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore';
+import { onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db, sessionsRef } from '../ts/firestoreConfig';
 
@@ -17,15 +10,6 @@ const MovieSessions = ({ movieId }: MovieSessionsType) => {
   const [movieSessions, setMovieSessions] = useState([]);
 
   const q = query(sessionsRef, where('movieId', '==', movieId));
-
-  //   useEffect(() => {
-  //     const getSessions = async () => {
-  //       const data = await getDocs(q);
-  //       setMovieSessions(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //     };
-
-  //     getSessions();
-  //   }, []);
 
   useEffect(() => {
     onSnapshot(q, (querySnapshot) => {
