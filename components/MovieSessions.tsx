@@ -1,4 +1,5 @@
 import { onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import { db, sessionsRef } from '../ts/firestoreConfig';
 
@@ -9,7 +10,11 @@ type MovieSessionsType = {
 const MovieSessions = ({ movieId }: MovieSessionsType) => {
   const [movieSessions, setMovieSessions] = useState([]);
 
-  const q = query(sessionsRef, where('movieId', '==', movieId));
+  const q = query(
+    sessionsRef,
+    where('movieId', '==', movieId),
+    orderBy('createdAt', 'desc')
+  );
 
   useEffect(() => {
     onSnapshot(q, (querySnapshot) => {
@@ -28,7 +33,7 @@ const MovieSessions = ({ movieId }: MovieSessionsType) => {
       <div>Movie({movieId}) Sessions:</div>
       {movieSessions.map((movieSession) => {
         return (
-          <div>
+          <div key={uuidv4()}>
             <span>{movieSession.ageDiff}</span>
           </div>
         );

@@ -6,10 +6,14 @@ import { moviesInfo } from '../../ts/moviesInfo';
 import InfoPart from '../../components/InfoPart';
 import CreateSession from '../../components/CreateSession';
 import MovieSessions from '../../components/MovieSessions';
+import { FirebaseAuthContext } from '../../store/auth-context';
 
 type movieType = {};
 
 const Movie = ({}: movieType) => {
+  const context = React.useContext(FirebaseAuthContext);
+  const userId = context.userId;
+
   const router = useRouter();
   const { movieId } = router.query;
   const index = Number(movieId) - 1;
@@ -47,7 +51,7 @@ const Movie = ({}: movieType) => {
           </div>
         </div>
         <MovieSessions movieId={movieId} />
-        <CreateSession movieId={movieId} />
+        {userId && <CreateSession movieId={movieId} />}
       </main>
     </>
   );
