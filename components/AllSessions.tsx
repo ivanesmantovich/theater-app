@@ -1,25 +1,35 @@
-import { deleteDoc, doc, getDocs, onSnapshot, query } from 'firebase/firestore';
+import {
+  deleteDoc,
+  doc,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+} from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import { db, sessionsRef } from '../ts/firestoreConfig';
 import { format } from 'date-fns';
 import { FirebaseAuthContext } from '../store/auth-context';
+import { Button } from '@mui/material';
 
 const AllSessions = () => {
   const context = useContext(FirebaseAuthContext);
   const userId = context.userId;
 
   const [sessions, setSessions] = useState([]);
+  const [customQuery, setCustomQuery] = useState(query(sessionsRef));
+  const [sortDate, setSortDate] = useState('');
+  const [sortGender, setSortGender] = useState('');
 
-  const q = query(sessionsRef);
   useEffect(() => {
-    onSnapshot(q, (querySnapshot) => {
+    onSnapshot(customQuery, (querySnapshot) => {
       const sessions = [];
       querySnapshot.forEach((doc) => {
         sessions.push({ ...doc.data(), id: doc.id });
       });
       setSessions(sessions);
     });
-  }, []);
+  }, [customQuery]);
 
   const deleteSession = async (id) => {
     const sessionDoc = doc(db, 'sessions', id);
@@ -27,8 +37,48 @@ const AllSessions = () => {
     console.log('deleted');
   };
 
+  const sortByDate = () => {
+    setSortGender('');
+    if (sortDate === '' || sortDate === 'asc') {
+      setCustomQuery(query(sessionsRef, orderBy('date', 'desc')));
+      setSortDate('desc');
+    } else {
+      setCustomQuery(query(sessionsRef, orderBy('date', 'asc')));
+      setSortDate('asc');
+    }
+  };
+
+  const sortByGender = () => {
+    setSortDate('');
+    if (sortGender === '' || sortGender === 'asc') {
+      setCustomQuery(query(sessionsRef, orderBy('gender', 'desc')));
+      setSortGender('desc');
+    } else {
+      setCustomQuery(query(sessionsRef, orderBy('gender', 'asc')));
+      setSortGender('asc');
+    }
+  };
+
   return (
     <div>
+      <div>
+        <Button
+          variant="contained"
+          disableElevation
+          size="large"
+          onClick={sortByDate}
+        >
+          By date
+        </Button>
+        <Button
+          variant="contained"
+          disableElevation
+          size="large"
+          onClick={sortByGender}
+        >
+          By gender
+        </Button>
+      </div>
       {sessions.map((session) => {
         return (
           <div key={session.id}>
@@ -52,13 +102,16 @@ const AllSessions = () => {
             </div>
             {userId === session.creatorId && (
               <div>
-                <button
+                <Button
+                  variant="contained"
+                  disableElevation
+                  size="medium"
                   onClick={() => {
                     deleteSession(session.id);
                   }}
                 >
                   Delete
-                </button>
+                </Button>
               </div>
             )}
           </div>
