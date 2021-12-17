@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { moviesInfo } from '../../ts/moviesInfo';
 import InfoPart from '../../components/InfoPart';
@@ -19,7 +18,7 @@ const Movie = ({}: movieType) => {
   const index = Number(movieId) - 1;
   const movie = moviesInfo[index];
   return (
-    <>
+    <div>
       <Head>
         <title>{`Theater App | ${movieId}`}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -53,7 +52,7 @@ const Movie = ({}: movieType) => {
         <MovieSessions movieId={movieId} />
         {userId && <CreateSession movieId={movieId} />}
       </main>
-    </>
+    </div>
   );
 };
 

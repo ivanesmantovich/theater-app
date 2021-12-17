@@ -32,7 +32,7 @@ function CreateSession({ movieId }: CreateSessionType) {
   const [gender, setGender] = React.useState('Any');
   const [ageDiff, setAgeDiff] = React.useState("Doesn't matter");
   const [multiplePeople, setMultiplePeople] = React.useState(false);
-  const [maxPeople, setMaxPeople] = React.useState('10');
+  const [maxPeople, setMaxPeople] = React.useState('2');
   const [message, setMessage] = React.useState('');
   const [isPasswordProtected, setPasswordProtected] = React.useState(false);
   const [password, setPassword] = React.useState('');
@@ -51,6 +51,7 @@ function CreateSession({ movieId }: CreateSessionType) {
 
   const handleMultiplePeopleChange = () => {
     setMultiplePeople(!multiplePeople);
+    setMaxPeople('10');
   };
 
   const handleMessageChange = (event) => {
@@ -80,7 +81,7 @@ function CreateSession({ movieId }: CreateSessionType) {
       maxPeople: maxPeople,
       password: password,
       message: message,
-      createdAt: serverTimestamp()
+      createdAt: serverTimestamp(),
     }).then(() => {
       console.log('Session created');
     });
@@ -169,6 +170,7 @@ function CreateSession({ movieId }: CreateSessionType) {
                 label="Max Amount of People"
                 onChange={handleMaxPeopleChange}
               >
+                <MenuItem value={'5'}>5</MenuItem>
                 <MenuItem value={'10'}>10</MenuItem>
                 <MenuItem value={'20'}>20</MenuItem>
                 <MenuItem value={'30'}>30</MenuItem>
