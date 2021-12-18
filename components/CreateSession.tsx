@@ -15,8 +15,8 @@ import {
 } from '@mui/material';
 import { setDate } from 'date-fns/esm';
 import { DateTimePicker, StaticTimePicker } from '@mui/lab';
-import { addDoc, serverTimestamp } from 'firebase/firestore';
-import { sessionsRef } from '../ts/firestoreConfig';
+import { addDoc, doc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { db, sessionsRef } from '../ts/firestoreConfig';
 import { FirebaseAuthContext } from '../store/auth-context';
 
 type CreateSessionType = {
@@ -36,6 +36,19 @@ function CreateSession({ movieId }: CreateSessionType) {
   const [message, setMessage] = React.useState('');
   const [isPasswordProtected, setPasswordProtected] = React.useState(false);
   const [password, setPassword] = React.useState('');
+  const [userData, setUserData] = React.useState<any>();
+
+  React.useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    const getUserData = async () => {
+      const userRef = doc(db, 'users', userId);
+      const user = await getDoc(userRef);
+      setUserData(user.data());
+    };
+    getUserData();
+  }, [userId]);
 
   const handleGenderChange = (event) => {
     setGender(event.target.value);
@@ -81,7 +94,7 @@ function CreateSession({ movieId }: CreateSessionType) {
       maxPeople: maxPeople,
       password: password,
       message: message,
-      members: [],
+      members: [userData],
       createdAt: serverTimestamp(),
     }).then(() => {
       console.log('Session created');
