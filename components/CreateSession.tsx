@@ -81,6 +81,7 @@ function CreateSession({ movieId }: CreateSessionType) {
       maxPeople: maxPeople,
       password: password,
       message: message,
+      members: [],
       createdAt: serverTimestamp(),
     }).then(() => {
       console.log('Session created');
