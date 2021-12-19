@@ -66,3 +66,5 @@ export const moviesInfo = [
     posterSrc: 'finkPoster.png',
   },
 ];
+
+

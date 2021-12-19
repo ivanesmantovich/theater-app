@@ -49,7 +49,6 @@ function CreateSession({ movieId }: CreateSessionType) {
     };
     getUserData();
   }, [userId]);
-
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };

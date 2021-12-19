@@ -57,7 +57,7 @@ const MovieSessions = ({ movieId }: MovieSessionsType) => {
   }, []);
 
   return (
-    <div className="mt-4 p-4 border border-l-4 border-r-4 rounded-lg  border-purple-700">
+    <div className="mt-4 p-4 border border-l-4 border-r-4 rounded-lg border-purple-700">
       <div className="font-bold">{`${movie.title} Sessions:`}</div>
       {movieSessions.map((movieSession, index) => {
         return (
@@ -68,12 +68,20 @@ const MovieSessions = ({ movieId }: MovieSessionsType) => {
           >
             <div className="text-2xl">
               <span>{`${index + 1}.`}</span>{' '}
-              <span className="font-semibold underline text-purple-800">{`${
+              <span
+                className={`font-semibold underline ${
+                  movieSession.gender === 'Male' ? 'text-blue-500' : ''
+                } ${movieSession.gender === 'Female' ? 'text-pink-500' : ''} ${
+                  movieSession.gender === 'Other' ? 'text-purple-500' : ''
+                }`}
+              >{`${
                 movieSession.message.length > 20
                   ? movieSession.message.substring(0, 20) + '...'
                   : movieSession.message
-              }`}</span>{' '}
-              <span>{movieSession.gender === 'Male' ? '🧑🏼' : '👩🏼'}</span>
+              }`}</span>
+              {movieSession.gender === 'Male' && <span>{' 🧑'}</span>}
+              {movieSession.gender === 'Female' && <span>{' 👩'}</span>}
+              {movieSession.gender === 'Other' && <span>{' 👤'}</span>}
             </div>
             <div>
               <p>{`🗓 ${format(movieSession.date.toDate(), 'yyyy.MM.dd')}`}</p>
